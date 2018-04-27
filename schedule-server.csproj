@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="microsoft.entityframeworkcore.sqlite" Version="2.0.2" />
+    <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>

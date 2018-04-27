@@ -9,6 +9,8 @@ namespace ScheduleServer.Models {
         public DbSet<Tutor> Tutors;
         public DbSet<Room> Rooms;
 
+        public UniversityContext(DbContextOptions<UniversityContext> options) : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Group>()
             .HasOne(g => g.Faculty)
