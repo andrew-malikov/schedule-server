@@ -2,12 +2,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ScheduleServer.Models {
     public class UniversityContext : DbContext {
-        public DbSet<Faculty> Faculties;
-        public DbSet<Course> Courses;
-        public DbSet<Group> Groups;
-        public DbSet<Department> Departments;
-        public DbSet<Tutor> Tutors;
-        public DbSet<Room> Rooms;
+        public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Tutor> Tutors { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
         public UniversityContext(DbContextOptions<UniversityContext> options) : base(options) { }
 

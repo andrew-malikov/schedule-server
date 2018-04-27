@@ -192,5 +192,8 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-## Vscode configs
+# Vscode configs
 .vscode
+
+# Folder with test db
+data

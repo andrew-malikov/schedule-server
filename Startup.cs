@@ -9,7 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
 using ScheduleServer.Models;
+using ScheduleServer.Libs;
 
 namespace ScheduleServer {
     public class Startup {
@@ -23,7 +25,9 @@ namespace ScheduleServer {
         public void ConfigureServices(IServiceCollection services) {
             var connection = Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
             services.AddDbContext<UniversityContext>(options => options.UseSqlite(connection));
-            
+
+            services.AddTransient<BasicDbSeeder<UniversityContext>>();
+
             services.AddMvc();
         }
 
@@ -33,7 +37,7 @@ namespace ScheduleServer {
                 app.UseDeveloperExceptionPage();
             }
 
-            
+            app.ApplicationServices.GetService<BasicDbSeeder<UniversityContext>>().Create();
 
             app.UseMvc();
         }
