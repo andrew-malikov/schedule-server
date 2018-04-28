@@ -5,20 +5,20 @@ using Newtonsoft.Json;
 namespace ScheduleServer.Configs {
     public class JsonFileRepositoryConfig : FileRepositoryConfig {
         protected string jsonRootPath;
-        protected string jsonDirecoriesPath;
+        protected string jsonDirectoriesPath;
         protected IConfiguration externalConfig;
 
-        JsonFileRepositoryConfig(IConfiguration configs) {
+        public JsonFileRepositoryConfig(IConfiguration configs) {
             externalConfig = configs;
 
-            jsonRootPath = "fileRepositoryConfig";
-            jsonDirecoriesPath = $"{jsonRootPath}:directories";
+            jsonRootPath = "FileRepositoryConfig";
+            jsonDirectoriesPath = $"{jsonRootPath}:Directories";
 
             setUpConfig(configs);
         }
 
         private void setUpConfig(IConfiguration configs) {
-            directories = JsonConvert.DeserializeObject<Dictionary<string, string>>(configs[jsonDirecoriesPath]);
+            directories = configs.GetSection(jsonDirectoriesPath).Get<Dictionary<string,string>>();
         }
 
         public override void AddDiretory(string key, string value) {
@@ -36,7 +36,7 @@ namespace ScheduleServer.Configs {
         }
 
         private void SaveConfig() {
-            externalConfig[jsonDirecoriesPath] = JsonConvert.SerializeObject(directories);
+            externalConfig[jsonDirectoriesPath] = JsonConvert.SerializeObject(directories);
         }
     }
 }

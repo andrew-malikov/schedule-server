@@ -17,14 +17,22 @@ using ScheduleServer.Repositories;
 
 namespace ScheduleServer {
     public class Startup {
-        public Startup(IConfiguration configuration) {
-            Configuration = configuration;
+        public Startup(IHostingEnvironment env) {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("settings/repository.json")
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            services.AddTransient<IConfiguration>(provider => Configuration);
+
             var connection = Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
             services.AddDbContext<UniversityContext>(options => options.UseSqlite(connection));
 
@@ -45,7 +53,7 @@ namespace ScheduleServer {
 
             app.ApplicationServices.GetService<BasicDbSeeder<UniversityContext>>().Create();
 
-            app.ApplicationServices.GetService<FileRepository<string>>().SetRootDirectory("data/schedules/");
+            app.ApplicationServices.GetService<FileRepository<string>>().SetRootDirectory("schedules");
 
             app.UseMvc();
         }
