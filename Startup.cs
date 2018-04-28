@@ -27,6 +27,7 @@ namespace ScheduleServer {
             services.AddDbContext<UniversityContext>(options => options.UseSqlite(connection));
 
             services.AddTransient<BasicDbSeeder<UniversityContext>>();
+            services.AddTransient<FileSystem>();
 
             services.AddMvc();
         }
