@@ -23,7 +23,7 @@ namespace ScheduleServer.Libs {
             }
         }
 
-        public void DeleteFile(string path, string content) {
+        public void DeleteFile(string path) {
             File.Delete(path);
         }
 

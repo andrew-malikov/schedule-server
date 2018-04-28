@@ -12,6 +12,8 @@ using Microsoft.Extensions.Options;
 
 using ScheduleServer.Models;
 using ScheduleServer.Libs;
+using ScheduleServer.Configs;
+using ScheduleServer.Repositories;
 
 namespace ScheduleServer {
     public class Startup {
@@ -29,6 +31,9 @@ namespace ScheduleServer {
             services.AddTransient<BasicDbSeeder<UniversityContext>>();
             services.AddTransient<FileSystem>();
 
+            services.AddSingleton<FileRepositoryConfig, JsonFileRepositoryConfig>();
+            services.AddSingleton<FileRepository<string>>();
+
             services.AddMvc();
         }
 
@@ -39,6 +44,8 @@ namespace ScheduleServer {
             }
 
             app.ApplicationServices.GetService<BasicDbSeeder<UniversityContext>>().Create();
+
+            app.ApplicationServices.GetService<FileRepository<string>>().SetRootDirectory("data/schedules/");
 
             app.UseMvc();
         }
