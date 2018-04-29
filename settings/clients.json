@@ -1,0 +1,5 @@
+{
+  "OsuApi": {
+    "BaseUri": "http://osu.ru/pages/schedule/index.php"
+  }
+}

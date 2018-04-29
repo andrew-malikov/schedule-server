@@ -4,8 +4,8 @@ using Newtonsoft.Json.Linq;
 using ScheduleServer.Models;
 
 namespace ScheduleServer.Converters {
-    public class FacultyJsonConverter : IModelJsonConverter<IDictionary<string, JToken>, Faculty> {
-        public Faculty Convert(IDictionary<string, JToken> value) {
+    public class FacultyJsonConverter : IModelJsonConverter<Faculty> {
+        public Faculty Convert(JToken value) {
             var faculty = new Faculty();
 
             faculty.Code = value["id"].Value<string>();

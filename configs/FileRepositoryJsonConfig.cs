@@ -3,12 +3,12 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace ScheduleServer.Configs {
-    public class JsonFileRepositoryConfig : FileRepositoryConfig {
+    public class FileRepositoryJsonConfig : FileRepositoryConfig {
         protected string jsonRootPath;
         protected string jsonDirectoriesPath;
         protected IConfiguration externalConfig;
 
-        public JsonFileRepositoryConfig(IConfiguration configs) {
+        public FileRepositoryJsonConfig(IConfiguration configs) {
             externalConfig = configs;
 
             jsonRootPath = "FileRepositoryConfig";
