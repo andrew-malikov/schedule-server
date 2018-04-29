@@ -39,8 +39,10 @@ namespace ScheduleServer {
             services.AddTransient<BasicDbSeeder<UniversityContext>>();
             services.AddTransient<FileSystem>();
 
+            services.AddTransient<ISerializable, JsonSerializator>();
+
             services.AddSingleton<FileRepositoryConfig, JsonFileRepositoryConfig>();
-            services.AddSingleton<FileRepository<string>>();
+            services.AddSingleton<FileRepository<string, Schedule>>();
 
             services.AddMvc();
         }
@@ -51,9 +53,11 @@ namespace ScheduleServer {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.ApplicationServices.GetService<BasicDbSeeder<UniversityContext>>().Create();
+            var services = app.ApplicationServices;
 
-            app.ApplicationServices.GetService<FileRepository<string>>().SetRootDirectory("schedules");
+            services.GetService<BasicDbSeeder<UniversityContext>>().Create();
+
+            services.GetService<FileRepository<string, Schedule>>().SetRootDirectory("schedules");
 
             app.UseMvc();
         }
