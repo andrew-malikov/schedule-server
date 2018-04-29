@@ -63,6 +63,9 @@ namespace ScheduleServer {
             services.AddSingleton<OsuDepartmentApi>();
             services.AddSingleton<OsuTutorApi>();
 
+            services.AddTransient<OsuApi>();
+            services.AddTransient<UniversityUpdater, SqliteUniversityUpdater>();
+
             services.AddMvc();
         }
 

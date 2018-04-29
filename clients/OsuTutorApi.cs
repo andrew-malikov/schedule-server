@@ -16,12 +16,12 @@ namespace ScheduleServer.Clients {
             this.converter = converter;
         }
 
-        public async Task<List<Tutor>> GetCourses(Faculty faculty, Department department) {
+        public async Task<List<Tutor>> GetTutors(Department department) {
             var formData = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("who", "2"),
                 new KeyValuePair<string, string>("request", "prep"),
                 new KeyValuePair<string, string>("filial", "1"),
-                new KeyValuePair<string, string>("facult", faculty.Code),
+                new KeyValuePair<string, string>("facult", department.Faculty.Code),
                 new KeyValuePair<string, string>("kafedra", department.Code)
             });
             HttpResponseMessage response = await DefaultSend(formData);
@@ -29,8 +29,12 @@ namespace ScheduleServer.Clients {
             var data = JObject.Parse(await GetContent(response, DefaultEncoding))["list"];
             var tutors = new List<Tutor>();
 
-            foreach (var tutor in data) {
-                tutors.Add(converter.Convert(tutor));
+            foreach (var rawTutor in data) {
+                var tutor = converter.Convert(rawTutor); 
+                
+                tutor.Department = department;
+                
+                tutors.Add(tutor);
             }
 
             return tutors;

@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="Microsoft.Entityframeworkcore" Version="2.0.2" />
     <PackageReference Include="microsoft.entityframeworkcore.sqlite" Version="2.0.2" />
     <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.0.2" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.4.0" />

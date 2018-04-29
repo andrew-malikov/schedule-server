@@ -16,7 +16,7 @@ namespace ScheduleServer.Clients {
             this.converter = converter;
         }
 
-        public async Task<List<Department>> GetCourses(Faculty faculty) {
+        public async Task<List<Department>> GetDepartments(Faculty faculty) {
             var formData = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("who", "2"),
                 new KeyValuePair<string, string>("request", "kafedra"),
@@ -28,8 +28,12 @@ namespace ScheduleServer.Clients {
             var data = JObject.Parse(await GetContent(response, DefaultEncoding))["list"];
             var departments = new List<Department>();
 
-            foreach (var department in data) {
-                departments.Add(converter.Convert(department));
+            foreach (var rawDepartment in data) {
+                var department = converter.Convert(rawDepartment);
+
+                department.Faculty = faculty;
+
+                departments.Add(department);
             }
 
             return departments;
