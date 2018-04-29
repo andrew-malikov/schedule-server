@@ -14,6 +14,8 @@ using ScheduleServer.Models;
 using ScheduleServer.Libs;
 using ScheduleServer.Configs;
 using ScheduleServer.Repositories;
+using ScheduleServer.Converters;
+using ScheduleServer.Clients;
 
 namespace ScheduleServer {
     public class Startup {
@@ -23,6 +25,7 @@ namespace ScheduleServer {
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddJsonFile("settings/repository.json")
+                .AddJsonFile("settings/clients.json")
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -41,8 +44,21 @@ namespace ScheduleServer {
 
             services.AddTransient<ISerializable, JsonSerializator>();
 
-            services.AddSingleton<FileRepositoryConfig, JsonFileRepositoryConfig>();
+            services.AddSingleton<FileRepositoryConfig, FileRepositoryJsonConfig>();
             services.AddSingleton<FileRepository<string, Schedule>>();
+
+            services.AddTransient<FacultyJsonConverter>();
+            services.AddTransient<CourseJsonConverter>();
+            services.AddTransient<GroupJsonConverter>();
+            services.AddTransient<DepartmentJsonConverter>();
+            services.AddTransient<TutorJsonConverter>();
+
+            services.AddSingleton<OsuApiConfig, OsuApiJsonConfig>();
+            services.AddSingleton<OsuFacultyApi>();
+            services.AddSingleton<OsuCourseApi>();
+            services.AddSingleton<OsuGroupApi>();
+            services.AddSingleton<OsuDepartmentApi>();
+            services.AddSingleton<OsuTutorApi>();
 
             services.AddMvc();
         }
