@@ -26,7 +26,7 @@ namespace ScheduleServer.Clients {
             });
             HttpResponseMessage response = await DefaultSend(formData);
 
-            var data = JObject.Parse(await GetContent(response))["list"];
+            var data = JObject.Parse(await GetContent(response, DefaultEncoding))["list"];
             var tutors = new List<Tutor>();
 
             foreach (var tutor in data) {

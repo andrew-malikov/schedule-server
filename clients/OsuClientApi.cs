@@ -21,7 +21,10 @@ namespace ScheduleServer.Clients {
         }
 
         protected async Task<string> GetContent(HttpResponseMessage response) {
-            var encoding = Encoding.GetEncoding("koi8r");
+            return new StreamReader(await response.Content.ReadAsStreamAsync()).ReadToEnd();
+        }
+
+        protected async Task<string> GetContent(HttpResponseMessage response, Encoding encoding) {
             return new StreamReader(await response.Content.ReadAsStreamAsync(), encoding).ReadToEnd();
         }
 
@@ -30,7 +33,9 @@ namespace ScheduleServer.Clients {
         }
 
         protected HttpRequestMessage GetHttpRequest(HttpContent content) {
-            return new OsuHttpRequestBuilder().SetHttpContent(content).Build();
+            return new OsuHttpRequestBuilder().SetHttpContent(content).SetMethod(HttpMethod.Post).Build();
         }
+
+        protected Encoding DefaultEncoding => Encoding.GetEncoding("koi8r");
     }
 }

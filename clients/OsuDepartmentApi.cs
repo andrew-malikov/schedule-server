@@ -25,7 +25,7 @@ namespace ScheduleServer.Clients {
             });
             HttpResponseMessage response = await DefaultSend(formData);
 
-            var data = JObject.Parse(await GetContent(response))["list"];
+            var data = JObject.Parse(await GetContent(response, DefaultEncoding))["list"];
             var departments = new List<Department>();
 
             foreach (var department in data) {

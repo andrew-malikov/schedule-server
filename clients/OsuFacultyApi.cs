@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
+using System.Text;
 using System.Net.Http;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -23,7 +24,7 @@ namespace ScheduleServer.Clients {
             });
             HttpResponseMessage response = await DefaultSend(formData);
 
-            var data = JObject.Parse(await GetContent(response))["list"];
+            var data = JObject.Parse(await GetContent(response, DefaultEncoding))["list"];
             var faculties = new List<Faculty>();
 
             foreach (var faculty in data) {

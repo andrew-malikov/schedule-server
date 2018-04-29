@@ -14,6 +14,12 @@ namespace ScheduleServer.Clients {
             return this;
         }
 
+        public OsuHttpRequestBuilder SetMethod(HttpMethod method) {
+            request.Method = method;
+
+            return this;
+        }
+
         public HttpRequestMessage Build() {
             return request;
         }
