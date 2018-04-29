@@ -7,7 +7,6 @@ namespace ScheduleServer.Models {
         public DbSet<Group> Groups { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Tutor> Tutors { get; set; }
-        public DbSet<Room> Rooms { get; set; }
 
         public UniversityContext(DbContextOptions<UniversityContext> options) : base(options) { }
 
