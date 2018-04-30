@@ -46,6 +46,7 @@ namespace ScheduleServer {
             services.AddTransient<FileSystem>();
 
             services.AddTransient<ISerializable, JsonSerializator>();
+            services.AddTransient<IGeneratable<object, string>, JsonNameGenerator>();
 
             services.AddSingleton<FileRepositoryConfig, FileRepositoryJsonConfig>();
             services.AddSingleton<FileRepository<string, Schedule>>();
