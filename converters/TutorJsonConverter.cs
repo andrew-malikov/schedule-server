@@ -6,11 +6,11 @@ using ScheduleServer.Models;
 namespace ScheduleServer.Converters {
     public class TutorJsonConverter : IModelJsonConverter<Tutor> {
         public Tutor Convert(JToken value) {
-            var tutor = new Tutor();
-
-            tutor.Code = value["id"].Value<string>();
-            tutor.FullName = value["title"].Value<string>();
-            tutor.ShortName = value["name"].Value<string>();
+            var tutor = new Tutor() {
+                Code = value["id"].Value<string>(),
+                FullName = value["title"].Value<string>(),
+                ShortName = value["name"].Value<string>()
+            };
 
             return tutor;
         }
