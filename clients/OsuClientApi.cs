@@ -20,6 +20,12 @@ namespace ScheduleServer.Clients {
             }
         }
 
+        protected async Task<HttpResponseMessage> DefaultSend(Uri uri, FormUrlEncodedContent formData, HttpMethod method) {
+            using (var client = GetHttpClient(uri)) {
+                return await Send(client, GetHttpRequest(formData, method));
+            }
+        }
+
         protected async Task<string> GetContent(HttpResponseMessage response) {
             return new StreamReader(await response.Content.ReadAsStreamAsync()).ReadToEnd();
         }
@@ -32,8 +38,16 @@ namespace ScheduleServer.Clients {
             return new OsuHttpClientBuilder().SetBaseUri(config.GetBaseUri()).SetHeader().Build();
         }
 
+        protected HttpClient GetHttpClient(Uri uri) {
+            return new OsuHttpClientBuilder().SetBaseUri(uri).Build();
+        }
+
         protected HttpRequestMessage GetHttpRequest(HttpContent content) {
             return new OsuHttpRequestBuilder().SetHttpContent(content).SetMethod(HttpMethod.Post).Build();
+        }
+
+        protected HttpRequestMessage GetHttpRequest(HttpContent content, HttpMethod method) {
+            return new OsuHttpRequestBuilder().SetHttpContent(content).SetMethod(method).Build();
         }
 
         protected Encoding DefaultEncoding => Encoding.GetEncoding("koi8r");

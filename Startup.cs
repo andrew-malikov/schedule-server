@@ -56,6 +56,19 @@ namespace ScheduleServer {
             services.AddTransient<DepartmentJsonConverter>();
             services.AddTransient<TutorJsonConverter>();
 
+            services.AddTransient<TimeHtmlConverter>();
+            services.AddTransient<DisciplineHtmlConverter>();
+            services.AddTransient<LessonTypeHtmlConverter>();
+            services.AddTransient<GroupHtmlConverter>();
+            services.AddTransient<TutorHtmlConverter>();
+            services.AddTransient<RoomHtmlConverter>();
+            services.AddTransient<GroupLessonHmtlConverter>();
+            services.AddTransient<TutorLessonHmtlConverter>();
+            services.AddTransient<DayHtmlConveter<GroupLessonHmtlConverter>>();
+            services.AddTransient<DayHtmlConveter<TutorLessonHmtlConverter>>();
+            services.AddTransient<GroupScheduleHtmlConverter>();
+            services.AddTransient<TutorScheduleHtmlConverter>();
+
             services.AddSingleton<OsuApiConfig, OsuApiJsonConfig>();
             services.AddSingleton<OsuFacultyApi>();
             services.AddSingleton<OsuCourseApi>();

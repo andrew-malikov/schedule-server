@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -46,19 +45,17 @@ namespace ScheduleServer.Clients {
         public async Task<TutorSchedule> GetSchedule(Tutor tutor) {
             var formData = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("request", "rasp"),
+                new KeyValuePair<string, string>("what", "1"),
                 new KeyValuePair<string, string>("who", "2"),
                 new KeyValuePair<string, string>("mode", "full"),
                 new KeyValuePair<string, string>("filial", "1"),
-                new KeyValuePair<string, string>("facult", tutor.Department.Faculty.Code),
-                new KeyValuePair<string, string>("kafedra", tutor.Department.Code),
                 new KeyValuePair<string, string>("prep", tutor.Code)
             });
-            HttpResponseMessage response = await DefaultSend(formData);
+            HttpResponseMessage response = await DefaultSend(config.GetScheduleUri(), formData, HttpMethod.Post);
 
-            var responseData = JObject.Parse(await GetContent(response, DefaultEncoding))["content"].Value<string>();
+            var responseData = await GetContent(response, DefaultEncoding);
             var document = new HtmlParser().Parse(responseData);
             var htmlTable = document.QuerySelector("tbody");
-
             var schedule = scheduleConverter.Convert(htmlTable);
 
             schedule.Tutor = tutor;

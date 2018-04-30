@@ -14,7 +14,9 @@ namespace ScheduleServer.Converters {
         }
 
         public TutorSchedule Convert(IElement element) {
-            var schedule = new TutorSchedule();
+            var schedule = new TutorSchedule() {
+                Days = new List<Day>()
+            };
             var periods = GetPeriods(element.QuerySelector("#tableheader"));
 
             foreach (var item in element.Children) {
@@ -40,7 +42,7 @@ namespace ScheduleServer.Converters {
 
         protected Day BindTimeToLessons(Day day, List<Time> periods) {
             foreach (var lesson in day.Lessons) {
-                lesson.Time.Period = periods[lesson.Time.Number].Period;
+                lesson.Time.Period = periods[lesson.Time.Number - periods[0].Number].Period;
             }
 
             return day;

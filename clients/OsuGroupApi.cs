@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -46,18 +45,16 @@ namespace ScheduleServer.Clients {
         public async Task<GroupSchedule> GetSchedule(Group group) {
             var formData = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("request", "rasp"),
+                new KeyValuePair<string, string>("what", "1"),
                 new KeyValuePair<string, string>("mode", "full"),
                 new KeyValuePair<string, string>("filial", "1"),
-                new KeyValuePair<string, string>("facult", group.Faculty.Code),
-                new KeyValuePair<string, string>("potok", group.Course.Code),
-                new KeyValuePair<string, string>("potok", group.Code)
+                new KeyValuePair<string, string>("group", group.Code)
             });
-            HttpResponseMessage response = await DefaultSend(formData);
+            HttpResponseMessage response = await DefaultSend(config.GetScheduleUri(), formData, HttpMethod.Post);
 
-            var responseData = JObject.Parse(await GetContent(response, DefaultEncoding))["content"].Value<string>();
+            var responseData = await GetContent(response, DefaultEncoding);
             var document = new HtmlParser().Parse(responseData);
             var htmlTable = document.QuerySelector("tbody");
-
             var schedule = scheduleConverter.Convert(htmlTable);
 
             schedule.Group = group;
