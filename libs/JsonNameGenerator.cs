@@ -12,7 +12,7 @@ namespace ScheduleServer.Libs {
         }
 
         public string Generate(object value) {
-            var name = Build(Regex.Matches(value.ToString(), @"[\w\d]+")).ToLower();
+            var name = Build(Regex.Matches(value.ToString(), @"[\w\d]+"));
 
             return $"{name}{separator}{extension}";
         }
@@ -21,10 +21,10 @@ namespace ScheduleServer.Libs {
             var builder = new StringBuilder();
 
             foreach (var item in items) {
-                builder.Append($"{item}-");
+                builder.Append(item);
             }
 
-            return builder.Remove(builder.Length, 1).ToString();
+            return builder.ToString();
         }
     }
 }

@@ -15,11 +15,11 @@ namespace ScheduleServer.Libs {
             SaveFile(path, string.Empty);
         }
 
-        public void SaveFile(string path, string content) {
+        public async void SaveFile(string path, string content) {
             CreateDirectory(path);
 
             using (var file = File.CreateText(path)) {
-                file.WriteAsync(content);
+                await file.WriteAsync(content);
             }
         }
 

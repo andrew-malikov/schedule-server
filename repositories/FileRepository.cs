@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ScheduleServer.Models;
 using ScheduleServer.Libs;
 using ScheduleServer.Configs;
+using ScheduleServer.Exceptions;
 
 namespace ScheduleServer.Repositories {
     public class FileRepository<K, V> : IAsyncRepository<K, V> {
@@ -26,8 +27,16 @@ namespace ScheduleServer.Repositories {
         }
 
         public async Task<V> Get(K key) {
-            var data = await fileSystem.GetFile(BuildPath(key));
-            return serializator.Deserialize<V>(data);
+            try {
+                var data = await fileSystem.GetFile(BuildPath(key));
+                return serializator.Deserialize<V>(data);
+            }
+            catch (DirectoryNotFoundException) {
+                throw new NotFoundException();
+            }
+            catch (FileNotFoundException) {
+                throw new NotFoundException();
+            }
         }
 
         public void Remove(K key) {

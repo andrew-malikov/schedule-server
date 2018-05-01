@@ -77,6 +77,8 @@ namespace ScheduleServer {
             services.AddSingleton<OsuDepartmentApi>();
             services.AddSingleton<OsuTutorApi>();
 
+            services.AddSingleton<ScheduleManager>();
+
             services.AddTransient<OsuApi>();
             services.AddTransient<UniversityUpdater, SqliteUniversityUpdater>();
 
