@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 
 using ScheduleServer.Models;
 using ScheduleServer.Libs;
@@ -17,16 +18,25 @@ using ScheduleServer.Configs;
 using ScheduleServer.Repositories;
 using ScheduleServer.Converters;
 using ScheduleServer.Clients;
+using ScheduleServer.Services;
+using ScheduleServer.Configuration;
 
 namespace ScheduleServer {
     public class Startup {
         public Startup(IHostingEnvironment env) {
+            var initConfig = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("settings/repository.json")
-                .AddJsonFile("settings/clients.json")
+                .AddJsonFile("settings/repository.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("settings/clients.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("settings/services.json", optional: false, reloadOnChange: true)
+                .AddEntityFrameworkConfig(options => options.UseSqlite(initConfig.GetConnectionString("ConfigConnection")))
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
 
@@ -81,6 +91,9 @@ namespace ScheduleServer {
 
             services.AddTransient<OsuApi>();
             services.AddTransient<UniversityUpdater, SqliteUniversityUpdater>();
+
+            services.AddSingleton<ClearRepositoryServiceConfig>();
+            services.AddSingleton<IHostedService, ClearRepositoryService>();
 
             services.AddMvc();
         }
