@@ -5,7 +5,7 @@ namespace ScheduleServer.Configs {
         protected Uri baseUri;
         protected Uri scheduleUri;
 
-        public abstract Uri GetBaseUri();
-        public abstract Uri GetScheduleUri();
+        public abstract Uri BaseUri { get; }
+        public abstract Uri ScheduleUri { get; }
     }
 }

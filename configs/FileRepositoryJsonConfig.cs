@@ -14,10 +14,10 @@ namespace ScheduleServer.Configs {
             jsonRootPath = "FileRepositoryConfig";
             jsonDirectoriesPath = $"{jsonRootPath}:Directories";
 
-            setUpConfig(configs);
+            SetUpConfig(configs);
         }
 
-        private void setUpConfig(IConfiguration configs) {
+        private void SetUpConfig(IConfiguration configs) {
             directories = configs.GetSection(jsonDirectoriesPath).Get<Dictionary<string,string>>();
         }
 

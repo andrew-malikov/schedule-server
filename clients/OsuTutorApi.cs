@@ -51,7 +51,7 @@ namespace ScheduleServer.Clients {
                 new KeyValuePair<string, string>("filial", "1"),
                 new KeyValuePair<string, string>("prep", tutor.Code)
             });
-            HttpResponseMessage response = await DefaultSend(config.GetScheduleUri(), formData, HttpMethod.Post);
+            HttpResponseMessage response = await DefaultSend(config.ScheduleUri, formData, HttpMethod.Post);
 
             var responseData = await GetContent(response, DefaultEncoding);
             var document = new HtmlParser().Parse(responseData);

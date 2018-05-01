@@ -1,7 +1,7 @@
 {
-    "FileRepositoryConfig": {
-        "Directories": {
-            "schedules": "data/schedules"
-        }
+  "FileRepositoryConfig": {
+    "Directories": {
+      "schedules": "data/schedules"
     }
+  }
 }

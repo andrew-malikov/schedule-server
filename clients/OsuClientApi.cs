@@ -35,7 +35,7 @@ namespace ScheduleServer.Clients {
         }
 
         protected HttpClient GetHttpClient() {
-            return new OsuHttpClientBuilder().SetBaseUri(config.GetBaseUri()).SetHeader().Build();
+            return new OsuHttpClientBuilder().SetBaseUri(config.BaseUri).SetHeader().Build();
         }
 
         protected HttpClient GetHttpClient(Uri uri) {
