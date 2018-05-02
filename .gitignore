@@ -196,4 +196,5 @@ ModelManifest.xml
 .vscode
 
 # Folder with test db
-data
+data/*
+!data/*.md
