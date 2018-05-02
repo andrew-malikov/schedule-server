@@ -6,7 +6,8 @@ namespace ScheduleServer.Configs {
 
         protected override void InitJsonPaths() {
             jsonRootPath = "UpdateUniversityDbService";
-            jsonIntervalPath = $"{jsonRootPath}:Interval";
+            jsonActionIntervalPath = $"{jsonRootPath}:ActionInterval";
+            jsonCheckIntervalPath = $"{jsonRootPath}:CheckInterval";
             jsonLastActionTimePath = $"{jsonRootPath}:LastActionTime";
         }
     }

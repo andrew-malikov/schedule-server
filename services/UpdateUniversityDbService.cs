@@ -22,7 +22,7 @@ namespace ScheduleServer.Services {
                     updater.FullUpdate();
                 }
 
-                await Task.Delay(config.Interval, stoppingToken);
+                await Task.Delay(config.CheckInterval, stoppingToken);
             }
         }
     }

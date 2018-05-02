@@ -24,7 +24,7 @@ namespace ScheduleServer.Services {
                     repository.RemoveAll();
                 }
 
-                await Task.Delay(config.Interval, stoppingToken);
+                await Task.Delay(config.CheckInterval, stoppingToken);
             }
         }
     }

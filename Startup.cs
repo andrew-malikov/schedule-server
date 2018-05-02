@@ -95,6 +95,9 @@ namespace ScheduleServer {
             services.AddSingleton<ClearRepositoryServiceConfig>();
             services.AddSingleton<IHostedService, ClearRepositoryService>();
 
+            services.AddSingleton<UpdateUniversityDbServiceConfig>();
+            services.AddSingleton<IHostedService, UpdateUniversityDbService>();
+
             services.AddMvc();
         }
 

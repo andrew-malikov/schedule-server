@@ -19,9 +19,9 @@ namespace ScheduleServer.Libs {
             this.tutorApi = tutorApi;
         }
 
-        public async Task<GroupSchedule> GetGroupSchedule(Group group) {
+        public async Task<Schedule> GetGroupSchedule(Group group) {
             try {
-                return await schedules.Get(group.Name) as GroupSchedule;
+                return await schedules.Get(group.Name);
             }
             catch (NotFoundException) {
                 var schedule = await groupApi.GetSchedule(group);
@@ -32,16 +32,16 @@ namespace ScheduleServer.Libs {
             }
         }
 
-        public async Task<TutorSchedule> GetTutorSchedule(Tutor tutor) {
+        public async Task<Schedule> GetTutorSchedule(Tutor tutor) {
             try {
-                return await schedules.Get(tutor.ShortName) as TutorSchedule;
+                return await schedules.Get(tutor.ShortName);
             }
             catch (NotFoundException) {
                 var schedule = await tutorApi.GetSchedule(tutor);
 
                 schedules.Add(tutor.ShortName, schedule);
 
-                return schedule as TutorSchedule;
+                return schedule;
             }
         }
     }

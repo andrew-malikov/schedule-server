@@ -7,7 +7,9 @@ namespace ScheduleServer.Libs {
         }
 
         public string Serialize(object value) {
-            return JsonConvert.SerializeObject(value);
+            return JsonConvert.SerializeObject(value, new JsonSerializerSettings() {
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
     }
 }

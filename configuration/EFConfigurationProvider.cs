@@ -18,7 +18,7 @@ namespace ScheduleServer.Configuration {
 
             using (var context = new ConfigurationContext(builder.Options)) {
                 context.Database.EnsureCreated();
-                Console.WriteLine(context.Database.GetDbConnection());
+                
                 Data = GetDefaultValues();
 
                 if (context.Values.Any()) Data = context.Values.ToDictionary(c => c.Id, c => c.Value);

@@ -1,10 +1,12 @@
 {
   "ClearRepositoryService": {
-    "Interval": "0.00:00:05",
+    "ActionInterval": "2.00:00:00",
+    "CheckInterval": "1.00:00:00",
     "LastActionTime": "2018-05-01T16:49:55.3040529+05:00"
   },
   "UpdateUniversityDbService": {
-    "Interval": "90.00:00:00",
+    "ActionInterval": "90.00:00:00",
+    "CheckInterval": "2.00:00:00",
     "LastActionTime": "2018-05-01T13:41:18.6340996+05:00"
   }
 }
