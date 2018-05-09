@@ -17,9 +17,14 @@ namespace ScheduleServer.Converters {
 
         public Day Convert(IElement element) {
             var date = Regex.Match(element.InnerHtml, @"\d{2}[.]\d{2}[.]\d{4}").Value;
+            var dateTime = DateTime.ParseExact(date, "dd.mm.yyyy", CultureInfo.InvariantCulture);
 
             var day = new Day() {
-                Date = DateTime.ParseExact(date, "dd.mm.yyyy", CultureInfo.InvariantCulture),
+                Date = new Date() {
+                    Year = dateTime.Year,
+                    Month = dateTime.Month,
+                    Day = dateTime.Day
+                },
                 Lessons = new List<Lesson>()
             };
 
