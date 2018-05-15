@@ -52,9 +52,9 @@ namespace ScheduleServer.Configs {
         }
 
         protected void SaveConfig() {
-            externalConfig[jsonActionIntervalPath] = JsonConvert.SerializeObject(ActionInterval);
-            externalConfig[jsonCheckIntervalPath] = JsonConvert.SerializeObject(CheckInterval);
-            externalConfig[jsonLastActionTimePath] = JsonConvert.SerializeObject(LastActionTime);
+            externalConfig[jsonActionIntervalPath] = ActionInterval.ToString("c");
+            externalConfig[jsonCheckIntervalPath] = CheckInterval.ToString("c");
+            externalConfig[jsonLastActionTimePath] = LastActionTime.ToShortDateString();
         }
 
         public bool IsActionTime() {
