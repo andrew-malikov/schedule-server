@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System;
 
 namespace ScheduleServer.Controllers {
-    [Route("groups/schedule")]
+    [Route("groups/schedules")]
     public class GroupScheduleController : Controller {
 
         protected UniversityContext context;

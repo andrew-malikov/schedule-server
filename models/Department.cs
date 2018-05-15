@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ScheduleServer.Models {
     public class Department {
@@ -9,6 +10,7 @@ namespace ScheduleServer.Models {
 
         public Faculty Faculty { get; set; }
 
+        [JsonIgnore]
         public List<Tutor> Tutors { get; set; }
     }
 }

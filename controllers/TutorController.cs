@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -16,16 +17,16 @@ namespace ScheduleServer.Controllers {
 
         [HttpGet]
         public IActionResult Get() {
-            return Json(context.Tutors.IncludeDependent().ToList(), new JsonSerializerSettings() {
+            return Json(context.Tutors.ToList(), new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore
             });
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id) {
-            var tutor = context.Tutors.IncludeDependent().Find(id);
-
-            if (tutor is null) return NotFound();
+            Tutor tutor;
+            try { tutor = context.Tutors.IncludeDependent().Single(t => id == t.Id); }
+            catch (ArgumentNullException) { return NotFound(); }
 
             return Json(tutor, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore

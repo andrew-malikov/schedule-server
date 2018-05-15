@@ -6,7 +6,7 @@ using ScheduleServer.Models;
 using ScheduleServer.Libs;
 
 namespace ScheduleServer.Controllers {
-    [Route("tutors/schedule")]
+    [Route("tutors/schedules")]
     public class TutorScheduleController : Controller {
         protected UniversityContext context;
         protected ScheduleManager manager;
