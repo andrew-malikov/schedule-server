@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 using ScheduleServer.Models;
@@ -16,14 +17,14 @@ namespace ScheduleServer.Controllers {
 
         [HttpGet]
         public IActionResult Get() {
-            return Json(context.Groups.ToList(), new JsonSerializerSettings() {
+            return Json(context.Groups.IncludeDependent().ToList(), new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore
             });
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id) {
-            var group = context.Groups.Find(id);
+            var group = context.Groups.IncludeDependent().Find(id);
 
             if (group is null) return NotFound();
 

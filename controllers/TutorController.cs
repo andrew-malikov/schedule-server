@@ -16,14 +16,14 @@ namespace ScheduleServer.Controllers {
 
         [HttpGet]
         public IActionResult Get() {
-            return Json(context.Tutors.ToList(), new JsonSerializerSettings() {
+            return Json(context.Tutors.IncludeDependent().ToList(), new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore
             });
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id) {
-            var tutor = context.Tutors.Find(id);
+            var tutor = context.Tutors.IncludeDependent().Find(id);
 
             if (tutor is null) return NotFound();
 

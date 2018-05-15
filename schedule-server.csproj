@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.Entityframeworkcore" Version="2.0.2" />
     <PackageReference Include="microsoft.entityframeworkcore.sqlite" Version="2.0.2" />
     <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.2" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.4.0" />
   </ItemGroup>
 
