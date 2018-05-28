@@ -21,7 +21,7 @@ namespace ScheduleServer.Configs {
             directories = configs.GetSection(jsonDirectoriesPath).Get<Dictionary<string,string>>();
         }
 
-        public override void AddDiretory(string key, string value) {
+        public override void AddDirectory(string key, string value) {
             directories.Add(key, value);
             SaveConfig();
         }

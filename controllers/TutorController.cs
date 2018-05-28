@@ -27,6 +27,7 @@ namespace ScheduleServer.Controllers {
             Tutor tutor;
             try { tutor = context.Tutors.IncludeDependent().Single(t => id == t.Id); }
             catch (ArgumentNullException) { return NotFound(); }
+            catch (InvalidOperationException) { return NotFound(); }
 
             return Json(tutor, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore

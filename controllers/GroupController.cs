@@ -28,6 +28,7 @@ namespace ScheduleServer.Controllers {
             Group group;
             try { group = context.Groups.IncludeDependent().Single(g => g.Id == id); }
             catch (ArgumentNullException) { return NotFound(); }
+            catch (InvalidOperationException) { return NotFound(); }
 
             return Json(group, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore

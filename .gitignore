@@ -198,3 +198,6 @@ ModelManifest.xml
 # Folder with test db
 data/*
 !data/*.md
+
+# test scripts
+scripts
