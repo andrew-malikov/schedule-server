@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using ScheduleServer.Models;
 using ScheduleServer.Repositories;
 using ScheduleServer.Configs;
+using ScheduleServer.Libs;
 
 namespace ScheduleServer.Services {
     public class ClearRepositoryService : BackgroundService {
 
-        protected FileRepository<string, Schedule> repository;
+        protected SchedulesUpdate updater;
         protected ClearRepositoryServiceConfig config;
 
-        public ClearRepositoryService(FileRepository<string, Schedule> repository, ClearRepositoryServiceConfig config) {
-            this.repository = repository;
+        public ClearRepositoryService(SchedulesUpdate updater, ClearRepositoryServiceConfig config) {
+            this.updater = updater;
             this.config = config;
         }
 
@@ -21,7 +22,7 @@ namespace ScheduleServer.Services {
             while (!stoppingToken.IsCancellationRequested) {
                 if (config.IsActionTime()) {
                     config.LastActionTime = DateTime.Now;
-                    repository.RemoveAll();
+                    updater.Update();
                 }
 
                 await Task.Delay(config.CheckInterval, stoppingToken);

@@ -7,10 +7,10 @@ using ScheduleServer.Libs;
 
 namespace ScheduleServer.Services {
     public class UpdateUniversityDbService : BackgroundService {
-        protected UniversityUpdater updater;
+        protected UniversityUpdate updater;
         protected UpdateUniversityDbServiceConfig config;
 
-        public UpdateUniversityDbService(UniversityUpdater updater, UpdateUniversityDbServiceConfig config) {
+        public UpdateUniversityDbService(UniversityUpdate updater, UpdateUniversityDbServiceConfig config) {
             this.updater = updater;
             this.config = config;
         }
@@ -19,7 +19,7 @@ namespace ScheduleServer.Services {
             while (!stoppingToken.IsCancellationRequested) {
                 if (config.IsActionTime()) {
                     config.LastActionTime = DateTime.Now;
-                    updater.FullUpdate();
+                    updater.Update();
                 }
 
                 await Task.Delay(config.CheckInterval, stoppingToken);

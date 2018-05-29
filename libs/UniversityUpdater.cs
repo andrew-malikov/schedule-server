@@ -2,24 +2,21 @@ using ScheduleServer.Models;
 using ScheduleServer.Clients;
 
 namespace ScheduleServer.Libs {
-    public abstract class UniversityUpdater : IFullUpdatable {
+    public abstract class UniversityUpdate : IUpdatable {
         protected UniversityContext context;
         protected OsuApi osuApi;
 
-        public UniversityUpdater(UniversityContext context, OsuApi osuApi) {
+        public UniversityUpdate(UniversityContext context, OsuApi osuApi) {
             this.context = context;
             this.osuApi = osuApi;
         }
 
-        public async void FullUpdate() {
+        public async void Update() {
             Clear();
 
-            context.Groups.AddRange(await osuApi.GetRelatedGroups());
-            context.Tutors.AddRange(await osuApi.GetRelatedTutors());
+            context.AddRange(await osuApi.GetFaculties());
 
             context.SaveChanges();
-
-            osuApi.ResetFaculties();
         }
 
 
