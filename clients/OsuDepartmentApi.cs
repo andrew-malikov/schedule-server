@@ -28,10 +28,11 @@ namespace ScheduleServer.Clients {
             var data = JObject.Parse(await GetContent(response, DefaultEncoding))["list"];
             var departments = new List<Department>();
 
-            foreach (var rawDepartment in data) {
-                var department = converter.Convert(rawDepartment);
+            foreach (var token in data) {
+                var department = converter.Convert(token);
 
                 department.Faculty = faculty;
+                department.Tutors = new List<Tutor>();
 
                 departments.Add(department);
             }

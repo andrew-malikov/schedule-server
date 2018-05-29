@@ -42,7 +42,7 @@ namespace ScheduleServer.Clients {
             return tutors;
         }
 
-        public async Task<TutorSchedule> GetSchedule(Tutor tutor) {
+        public async Task<Schedule> GetSchedule(Tutor tutor) {
             var formData = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("request", "rasp"),
                 new KeyValuePair<string, string>("what", "1"),
@@ -57,8 +57,6 @@ namespace ScheduleServer.Clients {
             var document = new HtmlParser().Parse(responseData);
             var htmlTable = document.QuerySelector("tbody");
             var schedule = scheduleConverter.Convert(htmlTable);
-
-            schedule.Tutor = tutor;
 
             return schedule;
         }

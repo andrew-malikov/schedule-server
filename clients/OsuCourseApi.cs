@@ -26,8 +26,10 @@ namespace ScheduleServer.Clients {
             var data = JObject.Parse(await GetContent(response, DefaultEncoding))["list"];
             var courses = new List<Course>();
 
-            foreach (var course in data) {
-                courses.Add(converter.Convert(course));
+            foreach (var token in data) {
+                var course = converter.Convert(token);
+                course.Groups = new List<Group>();
+                courses.Add(course);
             }
 
             return courses;

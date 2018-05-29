@@ -4,10 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 using ScheduleServer.Models;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace ScheduleServer.Clients {
     public class OsuApi {
-        protected List<Faculty> faculties;
 
         protected OsuFacultyApi facultyApi;
         protected OsuCourseApi courseApi;
@@ -23,48 +23,47 @@ namespace ScheduleServer.Clients {
             this.tutorApi = tutorApi;
         }
 
-        public async Task<List<Group>> GetRelatedGroups() {
+        protected void AddCourses(List<Faculty> faculties) {
             var allCourses = new List<Course>();
-            var faculties = new Dictionary<Faculty, int>();
+            var facultyCourses = new Dictionary<Faculty, int>();
 
-            foreach (var faculty in await GetFaculties()) {
-                var courses = await courseApi.GetCourses(faculty);
+            foreach (var faculty in faculties) {
+                var courses = courseApi.GetCourses(faculty).Result;
 
                 if (allCourses.Count < courses.Count) allCourses = courses;
-                faculties.Add(faculty, courses.Count);
+                facultyCourses.Add(faculty, courses.Count);
             }
 
-            return await GetRelatedGroups(faculties, allCourses);
+            AddGroups(facultyCourses, allCourses);
         }
 
-        protected async Task<List<Group>> GetRelatedGroups(Dictionary<Faculty, int> faculties, List<Course> courses) {
-            var allGroups = new List<Group>();
-
+        protected void AddGroups(Dictionary<Faculty, int> faculties, List<Course> courses) {
             foreach (var pair in faculties) {
                 for (int i = 0; i < pair.Value; i++)
-                    allGroups.AddRange(await groupApi.GetGroups(pair.Key, courses[i]));
+                    pair.Key.Groups.AddRange(groupApi.GetGroups(pair.Key, courses[i]).Result);
             }
-
-            return allGroups;
         }
 
-        public async Task<List<Tutor>> GetRelatedTutors() {
-            var allTutors = new List<Tutor>();
-
-            foreach (var faculty in await GetFaculties())
-                foreach (var department in await departmentApi.GetDepartments(faculty))
-                    allTutors.AddRange(await tutorApi.GetTutors(department));
-
-            return allTutors;
+        protected void AddDepartments(List<Faculty> faculties) {
+            foreach (var faculty in faculties) {
+                var departments = departmentApi.GetDepartments(faculty).Result;
+                faculty.Departments.AddRange(departments);
+                AddTutors(departments);
+            }
         }
 
-        protected async Task<List<Faculty>> GetFaculties() {
-            if (faculties is null) faculties = await facultyApi.GetFaculties();
+        protected void AddTutors(List<Department> departments) {
+            foreach (var department in departments)
+                department.Tutors.AddRange(tutorApi.GetTutors(department).Result);
+        }
+
+        public async Task<List<Faculty>> GetFaculties() {
+            var faculties = await facultyApi.GetFaculties();
+
+            AddCourses(faculties);
+            AddDepartments(faculties);
+
             return faculties;
-        }
-
-        public void ResetFaculties() {
-            faculties = null;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace ScheduleServer.Clients {
             return groups;
         }
 
-        public async Task<GroupSchedule> GetSchedule(Group group) {
+        public async Task<Schedule> GetSchedule(Group group) {
             var formData = new FormUrlEncodedContent(new[]{
                 new KeyValuePair<string, string>("request", "rasp"),
                 new KeyValuePair<string, string>("what", "1"),
@@ -56,8 +56,6 @@ namespace ScheduleServer.Clients {
             var document = new HtmlParser().Parse(responseData);
             var htmlTable = document.QuerySelector("tbody");
             var schedule = scheduleConverter.Convert(htmlTable);
-
-            schedule.Group = group;
 
             return schedule;
         }
