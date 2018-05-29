@@ -57,11 +57,10 @@ namespace ScheduleServer {
             services.AddTransient<BasicDbSeeder<UniversityContext>>();
             services.AddTransient<FileSystem>();
 
-            services.AddTransient<ISerializable, JsonSerializator>();
-            services.AddTransient<IGeneratable<object, string>, JsonNameGenerator>();
+            services.AddTransient<JsonSerializator>();
 
-            services.AddSingleton<FileRepositoryConfig, FileRepositoryJsonConfig>();
-            services.AddSingleton<FileRepository<string, Schedule>>();
+            services.AddTransient<GroupSchedulesRepository>();
+            services.AddTransient<TutorSchedulesRepository>();
 
             services.AddTransient<FacultyJsonConverter>();
             services.AddTransient<CourseJsonConverter>();
@@ -92,7 +91,8 @@ namespace ScheduleServer {
             services.AddSingleton<ScheduleManager>();
 
             services.AddTransient<OsuApi>();
-            services.AddTransient<UniversityUpdater, SqliteUniversityUpdater>();
+            services.AddTransient<UniversityUpdate, SqliteUniversityUpdater>();
+            services.AddTransient<SchedulesUpdate, SqliteScheduleUpdate>();
 
             services.AddSingleton<ClearRepositoryServiceConfig>();
             services.AddSingleton<IHostedService, ClearRepositoryService>();
@@ -112,8 +112,6 @@ namespace ScheduleServer {
             var services = app.ApplicationServices;
 
             services.GetService<BasicDbSeeder<UniversityContext>>().Create();
-
-            services.GetService<FileRepository<string, Schedule>>().SetRootDirectory("schedules");
 
             app.UseMvc();
         }

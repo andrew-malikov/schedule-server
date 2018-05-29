@@ -4,7 +4,7 @@ using AngleSharp.Dom;
 using ScheduleServer.Models;
 
 namespace ScheduleServer.Converters {
-    public class GroupScheduleHtmlConverter : IModelHtmlConverter<GroupSchedule> {
+    public class GroupScheduleHtmlConverter : IModelHtmlConverter<Schedule> {
         protected TimeHtmlConverter timeConverter;
         protected DayHtmlConveter<GroupLessonHmtlConverter> dayConverter;
 
@@ -13,8 +13,8 @@ namespace ScheduleServer.Converters {
             this.dayConverter = dayConverter;
         }
 
-        public GroupSchedule Convert(IElement element) {
-            var schedule = new GroupSchedule() {
+        public Schedule Convert(IElement element) {
+            var schedule = new Schedule() {
                 Days = new List<Day>()
             };
             var periods = GetPeriods(element.QuerySelector("#tableheader"));

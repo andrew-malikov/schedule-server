@@ -27,9 +27,7 @@ namespace ScheduleServer.Controllers {
 
             var schedule = await manager.GetGroupSchedule(group);
 
-            return Json(schedule, new JsonSerializerSettings() {
-                NullValueHandling = NullValueHandling.Ignore
-            });
+            return Content(schedule.Value);
         }
     }
 }

@@ -4,45 +4,59 @@ using ScheduleServer.Repositories;
 using ScheduleServer.Models;
 using ScheduleServer.Clients;
 using ScheduleServer.Exceptions;
+using System;
+using System.Linq;
 
 namespace ScheduleServer.Libs {
     public class ScheduleManager {
         protected UniversityContext context;
-        protected FileRepository<string, Schedule> schedules;
         protected OsuGroupApi groupApi;
         protected OsuTutorApi tutorApi;
+        protected GroupSchedulesRepository groupSchedules;
+        protected TutorSchedulesRepository tutorSchedules;
 
-        public ScheduleManager(UniversityContext context, FileRepository<string, Schedule> schedules, OsuGroupApi groupApi, OsuTutorApi tutorApi) {
+        public ScheduleManager(UniversityContext context, OsuGroupApi groupApi, OsuTutorApi tutorApi, GroupSchedulesRepository groupSchedules, TutorSchedulesRepository tutorSchedules) {
             this.context = context;
-            this.schedules = schedules;
             this.groupApi = groupApi;
             this.tutorApi = tutorApi;
+            this.groupSchedules = groupSchedules;
+            this.tutorSchedules = tutorSchedules;
         }
 
-        public async Task<Schedule> GetGroupSchedule(Group group) {
+        public async Task<SerializedGroupSchedule> GetGroupSchedule(Group group) {
+            SerializedGroupSchedule serializedSchedule;
+
             try {
-                return await schedules.Get(group.Name);
+                serializedSchedule = context.GroupSchedules.SingleOrDefault(s => s.Group.Id == group.Id);
             }
-            catch (NotFoundException) {
+            catch (ArgumentNullException) { serializedSchedule = null; }
+            catch (InvalidOperationException) { serializedSchedule = null; }
+
+            if (serializedSchedule == null) {
                 var schedule = await groupApi.GetSchedule(group);
-
-                schedules.Add(group.Name, schedule);
-
-                return schedule;
+                serializedSchedule = groupSchedules.Insert(group, schedule);
+                groupSchedules.Save();
             }
+
+            return serializedSchedule;
         }
 
-        public async Task<Schedule> GetTutorSchedule(Tutor tutor) {
+        public async Task<SerializedTutorSchedule> GetTutorSchedule(Tutor tutor) {
+            SerializedTutorSchedule serializedSchedule;
+
             try {
-                return await schedules.Get(tutor.ShortName);
+                serializedSchedule = context.TutorSchedules.SingleOrDefault(s => s.Tutor.Id == tutor.Id);
             }
-            catch (NotFoundException) {
+            catch (ArgumentNullException) { serializedSchedule = null; }
+            catch (InvalidOperationException) { serializedSchedule = null; }
+
+            if (serializedSchedule == null) {
                 var schedule = await tutorApi.GetSchedule(tutor);
-
-                schedules.Add(tutor.ShortName, schedule);
-
-                return schedule;
+                serializedSchedule = tutorSchedules.Insert(tutor, schedule);
+                tutorSchedules.Save();
             }
+
+            return serializedSchedule;
         }
     }
 }
