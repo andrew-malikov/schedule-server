@@ -1,3 +1,5 @@
+using ScheduleServer.Libs;
+
 namespace ScheduleServer.Models {
     public class Tutor {
         public int Id { get; set; }
@@ -6,5 +8,7 @@ namespace ScheduleServer.Models {
         public string ShortName { get; set; }
 
         public Department Department { get; set; }
+
+        public SerializedTutorSchedule Schedule { get; set; }
     }
 }

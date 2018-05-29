@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ScheduleServer.Libs;
 
 namespace ScheduleServer.Models {
     public class UniversityContext : DbContext {
@@ -7,6 +8,8 @@ namespace ScheduleServer.Models {
         public DbSet<Group> Groups { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Tutor> Tutors { get; set; }
+        public DbSet<SerializedGroupSchedule> GroupSchedules { get; set; }
+        public DbSet<SerializedTutorSchedule> TutorSchedules { get; set; }
 
         public UniversityContext(DbContextOptions<UniversityContext> options) : base(options) { }
 
@@ -26,6 +29,16 @@ namespace ScheduleServer.Models {
             modelBuilder.Entity<Tutor>()
             .HasOne(t => t.Department)
             .WithMany(d => d.Tutors);
+
+            modelBuilder.Entity<Group>()
+            .HasOne(g => g.Schedule)
+            .WithOne(s => s.Group)
+            .IsRequired(false);
+
+            modelBuilder.Entity<Tutor>()
+            .HasOne(t => t.Schedule)
+            .WithOne(s => s.Tutor)
+            .IsRequired(false);
         }
     }
 }

@@ -201,3 +201,6 @@ data/*
 
 # test scripts
 scripts
+
+# project structure
+uml
