@@ -11,9 +11,9 @@ using ScheduleServer.Configs;
 namespace ScheduleServer.Clients {
     public class OsuGroupApi : OsuClientApi {
         protected GroupJsonConverter groupConverter;
-        protected GroupScheduleHtmlConverter scheduleConverter;
+        protected ScheduleHtmlConverter<GroupLessonHmtlConverter> scheduleConverter;
 
-        public OsuGroupApi(OsuApiConfig config, GroupJsonConverter groupConverter, GroupScheduleHtmlConverter scheduleConverter) : base(config) {
+        public OsuGroupApi(OsuApiConfig config, GroupJsonConverter groupConverter, ScheduleHtmlConverter<GroupLessonHmtlConverter> scheduleConverter) : base(config) {
             this.groupConverter = groupConverter;
             this.scheduleConverter = scheduleConverter;
         }

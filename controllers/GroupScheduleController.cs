@@ -11,9 +11,9 @@ namespace ScheduleServer.Controllers {
     public class GroupScheduleController : Controller {
 
         protected UniversityContext context;
-        protected ScheduleManager manager;
+        protected GroupScheduleManager manager;
 
-        public GroupScheduleController(UniversityContext context, ScheduleManager manager) {
+        public GroupScheduleController(UniversityContext context, GroupScheduleManager manager) {
             this.context = context;
             this.manager = manager;
         }
@@ -25,7 +25,7 @@ namespace ScheduleServer.Controllers {
             if (group is null)
                 return NotFound();
 
-            var schedule = await manager.GetGroupSchedule(group);
+            var schedule = await manager.GetSchedule(group);
 
             return Content(schedule.Value);
         }

@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using AngleSharp.Dom;
-
 using ScheduleServer.Models;
 
 namespace ScheduleServer.Converters {
-    public class GroupScheduleHtmlConverter : IModelHtmlConverter<Schedule> {
+    public class ScheduleHtmlConverter<T> where T : IModelHtmlConverter<Lesson> {
         protected TimeHtmlConverter timeConverter;
-        protected DayHtmlConveter<GroupLessonHmtlConverter> dayConverter;
+        protected DayHtmlConveter<T> dayConverter;
 
-        public GroupScheduleHtmlConverter(TimeHtmlConverter timeConverter, DayHtmlConveter<GroupLessonHmtlConverter> dayConverter) {
+        public ScheduleHtmlConverter(TimeHtmlConverter timeConverter, DayHtmlConveter<T> dayConverter) {
             this.timeConverter = timeConverter;
             this.dayConverter = dayConverter;
         }

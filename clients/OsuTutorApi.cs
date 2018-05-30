@@ -11,9 +11,9 @@ using ScheduleServer.Configs;
 namespace ScheduleServer.Clients {
     public class OsuTutorApi : OsuClientApi {
         protected TutorJsonConverter tutorConverter;
-        protected TutorScheduleHtmlConverter scheduleConverter;
+        protected ScheduleHtmlConverter<TutorLessonHmtlConverter> scheduleConverter;
 
-        public OsuTutorApi(OsuApiConfig config, TutorJsonConverter tutorConverter, TutorScheduleHtmlConverter scheduleConverter) : base(config) {
+        public OsuTutorApi(OsuApiConfig config, TutorJsonConverter tutorConverter, ScheduleHtmlConverter<TutorLessonHmtlConverter> scheduleConverter) : base(config) {
             this.tutorConverter = tutorConverter;
             this.scheduleConverter = scheduleConverter;
         }

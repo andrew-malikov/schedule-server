@@ -9,9 +9,9 @@ namespace ScheduleServer.Controllers {
     [Route("tutors/schedules")]
     public class TutorScheduleController : Controller {
         protected UniversityContext context;
-        protected ScheduleManager manager;
+        protected TutorScheduleManager manager;
 
-        public TutorScheduleController(UniversityContext context, ScheduleManager manager) {
+        public TutorScheduleController(UniversityContext context, TutorScheduleManager manager) {
             this.context = context;
             this.manager = manager;
         }
@@ -23,7 +23,7 @@ namespace ScheduleServer.Controllers {
             if (tutor is null)
                 return NotFound();
 
-            var schedule = await manager.GetTutorSchedule(tutor);
+            var schedule = await manager.GetSchedule(tutor);
 
             return Content(schedule.Value);
         }

@@ -78,8 +78,8 @@ namespace ScheduleServer {
             services.AddTransient<TutorLessonHmtlConverter>();
             services.AddTransient<DayHtmlConveter<GroupLessonHmtlConverter>>();
             services.AddTransient<DayHtmlConveter<TutorLessonHmtlConverter>>();
-            services.AddTransient<GroupScheduleHtmlConverter>();
-            services.AddTransient<TutorScheduleHtmlConverter>();
+            services.AddTransient<ScheduleHtmlConverter<GroupLessonHmtlConverter>>();
+            services.AddTransient<ScheduleHtmlConverter<TutorLessonHmtlConverter>>();
 
             services.AddSingleton<OsuApiConfig, OsuApiJsonConfig>();
             services.AddSingleton<OsuFacultyApi>();
@@ -88,7 +88,8 @@ namespace ScheduleServer {
             services.AddSingleton<OsuDepartmentApi>();
             services.AddSingleton<OsuTutorApi>();
 
-            services.AddSingleton<ScheduleManager>();
+            services.AddSingleton<GroupScheduleManager>();
+            services.AddSingleton<TutorScheduleManager>();
 
             services.AddTransient<OsuApi>();
             services.AddTransient<UniversityUpdate, SqliteUniversityUpdate>();
