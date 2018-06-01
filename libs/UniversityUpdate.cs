@@ -14,9 +14,9 @@ namespace ScheduleServer.Libs {
         public async void Update() {
             Clear();
 
-            context.AddRange(await osuApi.GetFaculties());
+            await context.AddRangeAsync(await osuApi.GetFaculties());
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
 

@@ -33,12 +33,14 @@ namespace ScheduleServer.Models {
             modelBuilder.Entity<Group>()
             .HasOne(g => g.Schedule)
             .WithOne(s => s.Group)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Tutor>()
             .HasOne(t => t.Schedule)
             .WithOne(s => s.Tutor)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
