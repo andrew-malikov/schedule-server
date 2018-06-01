@@ -8,7 +8,7 @@ namespace ScheduleServer.Converters {
         public Tutor Convert(JToken value) {
             var tutor = new Tutor() {
                 Code = value["id"].Value<string>(),
-                FullName = value["title"].Value<string>(),
+                LongName = value["title"].Value<string>(),
                 ShortName = value["name"].Value<string>()
             };
 

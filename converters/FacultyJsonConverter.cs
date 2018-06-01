@@ -8,7 +8,7 @@ namespace ScheduleServer.Converters {
         public Faculty Convert(JToken value) {
             var faculty = new Faculty() {
                 Code = value["id"].Value<string>(),
-                FullName = value["title"].Value<string>(),
+                LongName = value["title"].Value<string>(),
                 ShortName = value["name"].Value<string>()
             };
 

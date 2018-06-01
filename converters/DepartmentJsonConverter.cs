@@ -8,7 +8,7 @@ namespace ScheduleServer.Converters {
         public Department Convert(JToken value) {
             var department = new Department() {
                 Code = value["id"].Value<string>(),
-                FullName = value["title"].Value<string>(),
+                LongName = value["title"].Value<string>(),
                 ShortName = value["name"].Value<string>()
             };
 
