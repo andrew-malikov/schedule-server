@@ -102,6 +102,15 @@ namespace ScheduleServer {
             services.AddSingleton<IHostedService, UpdateUniversityDbService>();
 
             services.AddMvc();
+            
+            services.AddCors(options => {
+                options.AddPolicy("AllowAll", builder => {
+                    builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
